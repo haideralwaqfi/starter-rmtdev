@@ -1,6 +1,7 @@
 import BookmarkIcon from "./BookmarkIcon";
 
 export default function JobItemContent() {
+  return <EmptyJobContent />;
   return (
     <section className="job-details">
       <div>
@@ -12,8 +13,7 @@ export default function JobItemContent() {
         <a
           className="apply-btn"
           href="https://fictional9thtechwebsite.com/"
-          target="_blank"
-        >
+          target="_blank">
           Apply
         </a>
 
