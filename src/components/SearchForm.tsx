@@ -1,15 +1,7 @@
-import { useEffect } from "react";
-import { jobItemsStores } from "../stores/jobItemsStores";
+import { useJobItems } from "../libs/hooks";
 
 export default function SearchForm() {
-  const searchText = jobItemsStores((state) => state.searchText);
-  const setSearchText = jobItemsStores((state) => state.setSearchText);
-
-  const fetchData = jobItemsStores((state) => state.fetchData);
-  useEffect(() => {
-    fetchData("searchText");
-  }, [searchText]);
-
+  const { searchText, setSearchText } = useJobItems();
   return (
     <form
       onSubmit={(e) => {

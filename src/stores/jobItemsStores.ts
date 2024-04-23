@@ -1,31 +1,39 @@
 import { create } from "zustand";
+import { TJobItem } from "../libs/types";
 type TJobItemsStores = {
   searchText: string;
-  jobItems: string[];
-  setJobItems: (jobItems: string[]) => void;
+  jobItems: Array<TJobItem>;
+  jobItemsSliced: Array<TJobItem>;
+  isLoading: boolean;
+  setJobItems: (jobItems: Array<TJobItem>) => void;
   setSearchText: (searchText: string) => void;
   fetchData: (searchText: string) => Promise<void>;
 };
 export const jobItemsStores = create<TJobItemsStores>((set, get) => ({
-  searchText: "",
+  searchText: "react",
   jobItems: [],
+  jobItemsSliced: [],
+  isLoading: false,
   setSearchText: (searchText: string) => {
     set(() => ({ searchText }));
-    console.log(get().searchText);
   },
-  setJobItems: (items: string[]) => {
+  setJobItems: (items: Array<TJobItem>) => {
     set(() => ({
       jobItems: items,
     }));
-    console.log(get().jobItems);
   },
   fetchData: async (searchText: string) => {
+    set(() => ({ isLoading: true }));
+
     const response = await fetch(
       `https://bytegrad.com/course-assets/projects/rmtdev/api/data?search=${searchText}`
     );
     const data = await response.json();
+    set(() => ({ isLoading: false }));
+
     set(() => ({ jobItems: data.jobItems }));
-    console.log(get().jobItems);
+    const jobItemsSliced = get().jobItems.slice(0, 7);
+    set(() => ({ jobItemsSliced }));
   },
 }));
 // the below code fragment can be found in:
